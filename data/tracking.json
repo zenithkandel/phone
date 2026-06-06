@@ -7,8 +7,8 @@
     },
     "2": {
         "called": true,
-        "vote_me": false,
-        "vote_opposition": true,
+        "vote_me": true,
+        "vote_opposition": false,
         "opposition_candidate": "ramesh"
     },
     "492": {
