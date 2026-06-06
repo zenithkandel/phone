@@ -514,7 +514,7 @@ body {
 .search-input:focus {
   border-color: var(--color-primary);
   background-color: var(--color-card);
-  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+  box-shadow: 0 0 0 4px var(--color-primary-light);
 }
 
 .filter-group {
@@ -553,7 +553,7 @@ body {
 .filter-select:focus {
   border-color: var(--color-primary);
   background-color: var(--color-card);
-  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+  box-shadow: 0 0 0 4px var(--color-primary-light);
 }
 
 @media (max-width: 900px) {
@@ -985,7 +985,7 @@ body {
   background-color: var(--color-primary);
   color: #ffffff;
   border-color: var(--color-primary);
-  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+  box-shadow: 0 4px 12px rgba(9, 9, 11, 0.25);
 }
 
 .page-btn.disabled {
@@ -1085,7 +1085,7 @@ body {
 .form-input:focus {
   border-color: var(--color-primary);
   background-color: var(--color-card);
-  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+  box-shadow: 0 0 0 4px var(--color-primary-light);
 }
 
 /* Buttons */
@@ -1113,12 +1113,12 @@ body {
 .btn-primary {
   background-color: var(--color-primary);
   color: #ffffff;
-  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+  box-shadow: 0 4px 12px rgba(9, 9, 11, 0.2);
 }
 
 .btn-primary:hover {
   background-color: #4338ca;
-  box-shadow: 0 6px 16px rgba(79, 70, 229, 0.3);
+  box-shadow: 0 6px 16px rgba(9, 9, 11, 0.3);
   transform: translateY(-1px);
 }
 
