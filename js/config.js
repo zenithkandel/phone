@@ -12,6 +12,11 @@ let config = {};
 
 // Initialize
 async function init() {
+    if (window.location.protocol === 'file:') {
+        oppositionList.innerHTML = '<p class="empty-text">Server required. Open via http://localhost/phone/config.html</p>';
+        return;
+    }
+
     try {
         const res = await fetch('api/get_config.php');
         config = await res.json();

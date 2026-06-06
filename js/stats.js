@@ -16,6 +16,17 @@ const fillProgressSupport = document.getElementById('fill-progress-support');
 
 // Initialize
 async function init() {
+    if (window.location.protocol === 'file:') {
+        document.querySelector('.stats-row').innerHTML = `
+            <div class="empty-state" style="grid-column: 1/-1;">
+                <i class="fa-sharp-duotone fa-solid fa-triangle-exclamation" style="color: var(--color-red)"></i>
+                <h3>Server Required</h3>
+                <p>This app requires a PHP server. Please start Apache in XAMPP and open via<br><strong>http://localhost/phone/stats.html</strong></p>
+            </div>
+        `;
+        return;
+    }
+
     try {
         const [votersRes, trackingRes, configRes] = await Promise.all([
             fetch('api/get_voters.php'),

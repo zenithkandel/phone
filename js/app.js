@@ -106,19 +106,20 @@ function applyFilters() {
 
     filteredVoters = allVoters.filter(voter => {
         // Hiding voters without phone numbers by default
-        const hasNoPhone = !voter.phone || voter.phone === 'Not Found' || voter.phone.trim() === '';
+        const phoneStr = String(voter.phone || '');
+        const hasNoPhone = !phoneStr || phoneStr === 'Not Found' || phoneStr.trim() === '';
         if (!showNoPhone && hasNoPhone) {
             return false;
         }
 
         // Search
-        const phoneStr = String(voter.phone || '');
         if (search && !voter.name.toLowerCase().includes(search) && !phoneStr.toLowerCase().includes(search)) {
             return false;
         }
 
         // Title
-        if (titleFilter !== 'all' && voter.title !== titleFilter) return false;
+        const voterTitle = voter.title ? (voter.title.charAt(0).toUpperCase() + voter.title.slice(1)) : '';
+        if (titleFilter !== 'all' && voterTitle !== titleFilter) return false;
 
         // Source
         if (sourceFilter !== 'all' && voter.source !== sourceFilter) return false;

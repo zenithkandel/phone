@@ -10,5 +10,11 @@
         "vote_me": false,
         "vote_opposition": true,
         "opposition_candidate": "ramesh"
+    },
+    "492": {
+        "called": true,
+        "vote_me": true,
+        "vote_opposition": false,
+        "opposition_candidate": ""
     }
 }
