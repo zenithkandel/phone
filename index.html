@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voter Tracker</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h2>VoterTracker</h2>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="index.html" class="nav-link active">
+                <span class="nav-icon">📊</span> Dashboard
+            </a>
+            <a href="config.html" class="nav-link">
+                <span class="nav-icon">⚙️</span> Settings
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1>Dashboard</h1>
+            <p>Track your voter outreach and support</p>
+        </div>
+
+        <!-- Stats Row - 4 cards -->
+        <div class="stats-row">
+            <div class="stat-card">
+                <div class="stat-label">Total Voters</div>
+                <div class="stat-value" id="stat-total">0</div>
+                <div class="stat-sub">In database</div>
+            </div>
+            <div class="stat-card stat-called">
+                <div class="stat-label">Called</div>
+                <div class="stat-value" id="stat-called">0</div>
+                <div class="stat-sub">Voters contacted</div>
+            </div>
+            <div class="stat-card stat-vote-me">
+                <div class="stat-label">Vote Me</div>
+                <div class="stat-value" id="stat-vote-me">0</div>
+                <div class="stat-sub">Likely supporters</div>
+            </div>
+            <div class="stat-card stat-opposition">
+                <div class="stat-label">Opposition</div>
+                <div class="stat-value" id="stat-opposition">0</div>
+                <div class="stat-sub">Leaning opposition</div>
+            </div>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+            <input type="text" class="search-input" id="search-input" placeholder="Search by name or phone...">
+            <select class="filter-select" id="filter-status">
+                <option value="all">All Status</option>
+                <option value="called">Called</option>
+                <option value="not-called">Not Called</option>
+                <option value="vote-me">Vote Me</option>
+                <option value="vote-opposition">Vote Opposition</option>
+            </select>
+            <select class="filter-select" id="filter-title">
+                <option value="all">All Titles</option>
+                <!-- Populated dynamically -->
+            </select>
+            <select class="filter-select" id="filter-source">
+                <option value="all">All Sources</option>
+                <option value="Final Voter List">Final Voter List</option>
+                <option value="Life Member">Life Member</option>
+            </select>
+            <select class="filter-select" id="filter-renewal">
+                <option value="all">All Types</option>
+                <option value="existing">Existing</option>
+                <option value="new">New</option>
+                <option value="life_member">Life Member</option>
+            </select>
+        </div>
+
+        <!-- Voter Table -->
+        <div class="table-container">
+            <table class="voter-table">
+                <thead>
+                    <tr>
+                        <th>S.N.</th>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Title</th>
+                        <th>Source</th>
+                        <th>Called</th>
+                        <th>Vote Me</th>
+                        <th>Opposition</th>
+                    </tr>
+                </thead>
+                <tbody id="voter-table-body">
+                    <!-- Populated by JS -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination" id="pagination">
+            <!-- Populated by JS -->
+        </div>
+    </main>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
