@@ -3,111 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Voter Tracker</title>
+    <title>Voter Tracker - Dashboard</title>
+    <!-- CSS Style File -->
     <link rel="stylesheet" href="css/style.css">
+    <!-- User Premium FontAwesome Kit CDN -->
+    <script src="https://zenithkandel.com.np/fontawesome/zenith-icons.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <!-- Sidebar -->
-    <aside class="sidebar">
-        <div class="sidebar-header">
-            <h2>VoterTracker</h2>
-        </div>
-        <nav class="sidebar-nav">
-            <a href="index.html" class="nav-link active">
-                <span class="nav-icon">📊</span> Dashboard
+    <div class="app-container">
+        <!-- Sidebar Navigation (Desktop) -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo-container">
+                    <i class="fa-sharp-duotone fa-solid fa-check-to-slot"></i>
+                </div>
+                <div>
+                    <h2>VoterTracker</h2>
+                    <span>Campaign Portal</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-link active" id="sidebar-nav-dashboard">
+                    <i class="fa-sharp-duotone fa-solid fa-chart-simple"></i> Dashboard
+                </a>
+                <a href="config.html" class="nav-link" id="sidebar-nav-settings">
+                    <i class="fa-sharp-duotone fa-solid fa-gear"></i> Settings
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="main-content">
+            <!-- Top Dashboard Bar -->
+            <div class="top-bar">
+                <div class="page-header">
+                    <h1>Dashboard</h1>
+                    <p>Track voter support, phone outreach, and campaign trends</p>
+                </div>
+                
+                <div class="user-profile" id="user-profile-widget">
+                    <div class="user-avatar" id="user-avatar-initials">VT</div>
+                    <div class="user-info">
+                        <span class="user-name" id="display-candidate-name">Candidate</span>
+                        <span class="user-role">Election Candidate</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats/Metrics Panel -->
+            <div class="stats-row">
+                <!-- Total Voters -->
+                <div class="stat-card stat-total" id="card-metric-total">
+                    <div class="stat-main">
+                        <div class="stat-details">
+                            <div class="stat-label">Total Voters</div>
+                            <div class="stat-value" id="stat-total">0</div>
+                        </div>
+                        <div class="stat-icon-wrapper">
+                            <i class="fa-sharp-duotone fa-solid fa-users"></i>
+                        </div>
+                    </div>
+                    <div class="stat-sub">
+                        <i class="fa-sharp-duotone fa-solid fa-database"></i> Registered in Database
+                    </div>
+                </div>
+
+                <!-- Called Voters -->
+                <div class="stat-card stat-called" id="card-metric-called">
+                    <div class="stat-main">
+                        <div class="stat-details">
+                            <div class="stat-label">Total Called</div>
+                            <div class="stat-value" id="stat-called">0</div>
+                        </div>
+                        <div class="stat-icon-wrapper">
+                            <i class="fa-sharp-duotone fa-solid fa-phone"></i>
+                        </div>
+                    </div>
+                    <div class="stat-sub">
+                        <i class="fa-sharp-duotone fa-solid fa-circle-check"></i> Outreached Voters
+                    </div>
+                </div>
+
+                <!-- Voters Supporting Me -->
+                <div class="stat-card stat-vote-me" id="card-metric-vote-me">
+                    <div class="stat-main">
+                        <div class="stat-details">
+                            <div class="stat-label">Supporting Me</div>
+                            <div class="stat-value" id="stat-vote-me">0</div>
+                        </div>
+                        <div class="stat-icon-wrapper">
+                            <i class="fa-sharp-duotone fa-solid fa-thumbs-up"></i>
+                        </div>
+                    </div>
+                    <div class="stat-sub">
+                        <i class="fa-sharp-duotone fa-solid fa-user-check"></i> Confirmed Supporters
+                    </div>
+                </div>
+
+                <!-- Opposition Voters -->
+                <div class="stat-card stat-opposition" id="card-metric-opposition">
+                    <div class="stat-main">
+                        <div class="stat-details">
+                            <div class="stat-label">Opposition</div>
+                            <div class="stat-value" id="stat-opposition">0</div>
+                        </div>
+                        <div class="stat-icon-wrapper">
+                            <i class="fa-sharp-duotone fa-solid fa-user-slash"></i>
+                        </div>
+                    </div>
+                    <div class="stat-sub">
+                        <i class="fa-sharp-duotone fa-solid fa-shield-halved"></i> Leaning Opposition
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter Controls Panel -->
+            <div class="filter-bar">
+                <div class="search-container">
+                    <i class="fa-sharp-duotone fa-solid fa-magnifying-glass search-icon"></i>
+                    <input type="text" class="search-input" id="search-input" placeholder="Search voters by name or phone...">
+                </div>
+                
+                <div class="filter-group">
+                    <div class="filter-select-wrapper">
+                        <select class="filter-select" id="filter-status">
+                            <option value="all">All Status</option>
+                            <option value="called">Called Only</option>
+                            <option value="not-called">Not Called</option>
+                            <option value="vote-me">Supporting Me</option>
+                            <option value="vote-opposition">Opposition Only</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-select-wrapper">
+                        <select class="filter-select" id="filter-title">
+                            <option value="all">All Titles</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-select-wrapper">
+                        <select class="filter-select" id="filter-source">
+                            <option value="all">All Sources</option>
+                            <option value="Final Voter List">Final Voter List</option>
+                            <option value="Life Member">Life Member</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-select-wrapper">
+                        <select class="filter-select" id="filter-renewal">
+                            <option value="all">All Types</option>
+                            <option value="existing">Existing</option>
+                            <option value="new">New</option>
+                            <option value="life_member">Life Member</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Voter Cards Responsive Grid -->
+            <div class="voter-grid" id="voter-cards-grid">
+                <!-- Rendered dynamically by app.js -->
+            </div>
+
+            <!-- Pagination Bar -->
+            <div class="pagination" id="pagination">
+                <!-- Rendered dynamically by app.js -->
+            </div>
+        </main>
+
+        <!-- Bottom Navigation Bar (Mobile View) -->
+        <nav class="mobile-nav" id="mobile-navigation-bar">
+            <a href="index.html" class="mobile-nav-link active" id="mobile-nav-dashboard">
+                <i class="fa-sharp-duotone fa-solid fa-chart-simple"></i>
+                <span>Dashboard</span>
             </a>
-            <a href="config.html" class="nav-link">
-                <span class="nav-icon">⚙️</span> Settings
+            <a href="config.html" class="mobile-nav-link" id="mobile-nav-settings">
+                <i class="fa-sharp-duotone fa-solid fa-gear"></i>
+                <span>Settings</span>
             </a>
         </nav>
-    </aside>
+    </div>
 
-    <!-- Main Content -->
-    <main class="main-content">
-        <!-- Page Header -->
-        <div class="page-header">
-            <h1>Dashboard</h1>
-            <p>Track your voter outreach and support</p>
-        </div>
-
-        <!-- Stats Row - 4 cards -->
-        <div class="stats-row">
-            <div class="stat-card">
-                <div class="stat-label">Total Voters</div>
-                <div class="stat-value" id="stat-total">0</div>
-                <div class="stat-sub">In database</div>
-            </div>
-            <div class="stat-card stat-called">
-                <div class="stat-label">Called</div>
-                <div class="stat-value" id="stat-called">0</div>
-                <div class="stat-sub">Voters contacted</div>
-            </div>
-            <div class="stat-card stat-vote-me">
-                <div class="stat-label">Vote Me</div>
-                <div class="stat-value" id="stat-vote-me">0</div>
-                <div class="stat-sub">Likely supporters</div>
-            </div>
-            <div class="stat-card stat-opposition">
-                <div class="stat-label">Opposition</div>
-                <div class="stat-value" id="stat-opposition">0</div>
-                <div class="stat-sub">Leaning opposition</div>
-            </div>
-        </div>
-
-        <!-- Filter Bar -->
-        <div class="filter-bar">
-            <input type="text" class="search-input" id="search-input" placeholder="Search by name or phone...">
-            <select class="filter-select" id="filter-status">
-                <option value="all">All Status</option>
-                <option value="called">Called</option>
-                <option value="not-called">Not Called</option>
-                <option value="vote-me">Vote Me</option>
-                <option value="vote-opposition">Vote Opposition</option>
-            </select>
-            <select class="filter-select" id="filter-title">
-                <option value="all">All Titles</option>
-                <!-- Populated dynamically -->
-            </select>
-            <select class="filter-select" id="filter-source">
-                <option value="all">All Sources</option>
-                <option value="Final Voter List">Final Voter List</option>
-                <option value="Life Member">Life Member</option>
-            </select>
-            <select class="filter-select" id="filter-renewal">
-                <option value="all">All Types</option>
-                <option value="existing">Existing</option>
-                <option value="new">New</option>
-                <option value="life_member">Life Member</option>
-            </select>
-        </div>
-
-        <!-- Voter Table -->
-        <div class="table-container">
-            <table class="voter-table">
-                <thead>
-                    <tr>
-                        <th>S.N.</th>
-                        <th>Name</th>
-                        <th>Phone</th>
-                        <th>Title</th>
-                        <th>Source</th>
-                        <th>Called</th>
-                        <th>Vote Me</th>
-                        <th>Opposition</th>
-                    </tr>
-                </thead>
-                <tbody id="voter-table-body">
-                    <!-- Populated by JS -->
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Pagination -->
-        <div class="pagination" id="pagination">
-            <!-- Populated by JS -->
-        </div>
-    </main>
-
+    <!-- JS Logic File -->
     <script src="js/app.js"></script>
 </body>
 </html>

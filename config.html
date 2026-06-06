@@ -3,67 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Settings - Voter Tracker</title>
+    <title>Voter Tracker - Settings</title>
+    <!-- CSS Style File -->
     <link rel="stylesheet" href="css/style.css">
+    <!-- User Premium FontAwesome Kit CDN -->
+    <script src="https://zenithkandel.com.np/fontawesome/zenith-icons.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <!-- Sidebar -->
-    <aside class="sidebar">
-        <div class="sidebar-header">
-            <h2>VoterTracker</h2>
-        </div>
-        <nav class="sidebar-nav">
-            <a href="index.html" class="nav-link">
-                <span class="nav-icon">📊</span> Dashboard
+    <div class="app-container">
+        <!-- Sidebar Navigation (Desktop) -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo-container">
+                    <i class="fa-sharp-duotone fa-solid fa-check-to-slot"></i>
+                </div>
+                <div>
+                    <h2>VoterTracker</h2>
+                    <span>Campaign Portal</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-link" id="sidebar-nav-dashboard">
+                    <i class="fa-sharp-duotone fa-solid fa-chart-simple"></i> Dashboard
+                </a>
+                <a href="config.html" class="nav-link active" id="sidebar-nav-settings">
+                    <i class="fa-sharp-duotone fa-solid fa-gear"></i> Settings
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="main-content">
+            <!-- Top Dashboard Bar -->
+            <div class="top-bar">
+                <div class="page-header">
+                    <h1>Settings</h1>
+                    <p>Configure campaign candidate metadata and manage opposition lists</p>
+                </div>
+                
+                <div class="user-profile" id="user-profile-widget">
+                    <div class="user-avatar" id="user-avatar-initials">VT</div>
+                    <div class="user-info">
+                        <span class="user-name" id="display-candidate-name">Candidate</span>
+                        <span class="user-role">Election Candidate</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Configuration Panels Grid -->
+            <div class="config-grid">
+                <!-- Panel: Candidate Details -->
+                <div class="config-card" id="card-config-candidate">
+                    <h3><i class="fa-sharp-duotone fa-solid fa-user-pen"></i> Your Profile</h3>
+                    <p class="config-desc">Change the display candidate name used across database metrics and headers.</p>
+                    <div class="config-form">
+                        <input type="text" id="candidate-name" class="form-input" placeholder="Enter candidate's full name">
+                        <button class="btn btn-primary" id="save-name-btn">
+                            <i class="fa-sharp-duotone fa-solid fa-floppy-disk"></i> Save Name
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Panel: Data Portability -->
+                <div class="config-card" id="card-config-data">
+                    <h3><i class="fa-sharp-duotone fa-solid fa-database"></i> Database Management</h3>
+                    <p class="config-desc">Backup tracking progress by exporting state to a JSON file or restore from a previous save.</p>
+                    <div class="config-form" style="gap: 12px; flex-wrap: wrap;">
+                        <button class="btn btn-secondary" id="export-btn">
+                            <i class="fa-sharp-duotone fa-solid fa-download"></i> Export Data
+                        </button>
+                        <button class="btn btn-secondary" id="import-btn">
+                            <i class="fa-sharp-duotone fa-solid fa-upload"></i> Import Backup
+                        </button>
+                        <input type="file" id="import-file" accept=".json" style="display: none;">
+                    </div>
+                </div>
+
+                <!-- Panel: Opposition Candidates -->
+                <div class="config-card" style="grid-column: 1 / -1;" id="card-config-opposition">
+                    <h3><i class="fa-sharp-duotone fa-solid fa-users-viewfinder"></i> Opposition Candidates</h3>
+                    <p class="config-desc">Add names of political competitors to track voter conversion distributions.</p>
+                    
+                    <div class="opposition-list" id="opposition-list">
+                        <!-- Populated by config.js -->
+                    </div>
+                    
+                    <div class="config-form" style="margin-top: 12px; border-top: 1px dashed var(--color-border); padding-top: 20px;">
+                        <input type="text" id="new-opposition" class="form-input" placeholder="Enter competitor name">
+                        <button class="btn btn-primary" id="add-opposition-btn">
+                            <i class="fa-sharp-duotone fa-solid fa-user-plus"></i> Add Candidate
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Bottom Navigation Bar (Mobile View) -->
+        <nav class="mobile-nav" id="mobile-navigation-bar">
+            <a href="index.html" class="mobile-nav-link" id="mobile-nav-dashboard">
+                <i class="fa-sharp-duotone fa-solid fa-chart-simple"></i>
+                <span>Dashboard</span>
             </a>
-            <a href="config.html" class="nav-link active">
-                <span class="nav-icon">⚙️</span> Settings
+            <a href="config.html" class="mobile-nav-link active" id="mobile-nav-settings">
+                <i class="fa-sharp-duotone fa-solid fa-gear"></i>
+                <span>Settings</span>
             </a>
         </nav>
-    </aside>
+    </div>
 
-    <!-- Main Content -->
-    <main class="main-content">
-        <div class="page-header">
-            <h1>Settings</h1>
-            <p>Configure your campaign details</p>
-        </div>
-
-        <!-- Candidate Name -->
-        <div class="config-card">
-            <h3>Your Name (Candidate)</h3>
-            <p class="config-desc">This name will be used across the application</p>
-            <div class="config-form">
-                <input type="text" id="candidate-name" class="form-input" placeholder="Enter your name">
-                <button class="btn btn-primary" id="save-name-btn">Save</button>
-            </div>
-        </div>
-
-        <!-- Opposition Candidates -->
-        <div class="config-card">
-            <h3>Opposition Candidates</h3>
-            <p class="config-desc">Add the names of opposition candidates for tracking</p>
-            <div class="opposition-list" id="opposition-list">
-                <!-- Populated by JS -->
-            </div>
-            <div class="config-form" style="margin-top: 12px;">
-                <input type="text" id="new-opposition" class="form-input" placeholder="Add opposition candidate name">
-                <button class="btn btn-primary" id="add-opposition-btn">Add</button>
-            </div>
-        </div>
-
-        <!-- Data Management -->
-        <div class="config-card">
-            <h3>Data Management</h3>
-            <p class="config-desc">Export or import your tracking data</p>
-            <div class="config-form" style="gap: 12px;">
-                <button class="btn btn-secondary" id="export-btn">Export Tracking Data</button>
-                <button class="btn btn-secondary" id="import-btn">Import Tracking Data</button>
-                <input type="file" id="import-file" accept=".json" style="display: none;">
-            </div>
-        </div>
-    </main>
-
+    <!-- JS Configuration File -->
     <script src="js/config.js"></script>
 </body>
 </html>

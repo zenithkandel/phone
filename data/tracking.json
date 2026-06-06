@@ -1,1 +1,8 @@
-{}
+{
+    "1": {
+        "called": true,
+        "vote_me": false,
+        "vote_opposition": true,
+        "opposition_candidate": ""
+    }
+}

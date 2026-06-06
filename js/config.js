@@ -1,9 +1,3 @@
-// Toast CSS styles needed in the page:
-// .toast { position: fixed; bottom: 20px; right: 20px; background: #333; color: #fff;
-//   padding: 12px 24px; border-radius: 6px; opacity: 0; transition: opacity 0.3s;
-//   z-index: 9999; font-size: 14px; }
-// .toast.show { opacity: 1; }
-
 // DOM Elements
 const candidateNameInput = document.getElementById('candidate-name');
 const saveNameBtn = document.getElementById('save-name-btn');
@@ -23,9 +17,26 @@ async function init() {
         config = await res.json();
         
         candidateNameInput.value = config.candidate_name || '';
+        updateProfileWidget();
         renderOppositionList();
     } catch (err) {
-        console.error('Failed to load config:', err);
+        console.error('Failed to load configuration settings:', err);
+        showToast('Error loading configuration settings', 'error');
+    }
+}
+
+// Update profile initials in the top right widget
+function updateProfileWidget() {
+    if (config.candidate_name) {
+        document.getElementById('display-candidate-name').textContent = config.candidate_name;
+        const parts = config.candidate_name.trim().split(/\s+/);
+        let initials = '';
+        if (parts.length > 0) initials += parts[0][0];
+        if (parts.length > 1) initials += parts[parts.length - 1][0];
+        document.getElementById('user-avatar-initials').textContent = initials.toUpperCase();
+    } else {
+        document.getElementById('display-candidate-name').textContent = 'Candidate';
+        document.getElementById('user-avatar-initials').textContent = 'VT';
     }
 }
 
@@ -33,7 +44,8 @@ async function init() {
 saveNameBtn.addEventListener('click', async () => {
     config.candidate_name = candidateNameInput.value.trim();
     await saveConfig();
-    showToast('Name saved successfully');
+    updateProfileWidget();
+    showToast('Candidate profile updated');
 });
 
 // Add opposition candidate
@@ -47,20 +59,23 @@ function addOpposition() {
     if (!name) return;
     if (!config.opposition_candidates) config.opposition_candidates = [];
     if (config.opposition_candidates.includes(name)) {
-        showToast('Candidate already exists');
+        showToast('Candidate already exists', 'error');
         return;
     }
     config.opposition_candidates.push(name);
     newOppositionInput.value = '';
     renderOppositionList();
     saveConfig();
+    showToast(`Added opposition candidate: ${name}`);
 }
 
 // Remove opposition candidate
 function removeOpposition(index) {
+    const name = config.opposition_candidates[index];
     config.opposition_candidates.splice(index, 1);
     renderOppositionList();
     saveConfig();
+    showToast(`Removed opposition candidate: ${name}`);
 }
 
 // Render opposition list
@@ -74,7 +89,9 @@ function renderOppositionList() {
     oppositionList.innerHTML = candidates.map((name, i) => `
         <div class="opposition-item">
             <span class="opposition-name">${escapeHtml(name)}</span>
-            <button class="btn btn-danger btn-sm" onclick="removeOpposition(${i})">Remove</button>
+            <button class="btn btn-danger btn-sm" onclick="removeOpposition(${i})">
+                <i class="fa-sharp-duotone fa-solid fa-trash"></i> Remove
+            </button>
         </div>
     `).join('');
 }
@@ -89,7 +106,7 @@ async function saveConfig() {
         });
     } catch (err) {
         console.error('Failed to save config:', err);
-        showToast('Error saving config');
+        showToast('Error saving configuration settings', 'error');
     }
 }
 
@@ -116,10 +133,10 @@ exportBtn.addEventListener('click', async () => {
         a.download = `voter-tracker-backup-${new Date().toISOString().split('T')[0]}.json`;
         a.click();
         URL.revokeObjectURL(url);
-        showToast('Data exported successfully');
+        showToast('Tracking data exported successfully');
     } catch (err) {
         console.error('Export failed:', err);
-        showToast('Error exporting data');
+        showToast('Error exporting data', 'error');
     }
 });
 
@@ -139,6 +156,7 @@ importFile.addEventListener('change', async (e) => {
         if (data.config) {
             config = data.config;
             candidateNameInput.value = config.candidate_name || '';
+            updateProfileWidget();
             renderOppositionList();
             await saveConfig();
         }
@@ -157,31 +175,35 @@ importFile.addEventListener('change', async (e) => {
             }
         }
         
-        showToast('Data imported successfully');
+        showToast('Backup data imported successfully');
     } catch (err) {
         console.error('Import failed:', err);
-        showToast('Error importing data. Invalid file format.');
+        showToast('Error importing backup. Invalid format.', 'error');
     }
     
     importFile.value = '';
 });
 
-// Simple toast notification
-function showToast(message) {
-    // Remove existing toast
+// Premium toast notification
+function showToast(message, type = 'success') {
     const existing = document.querySelector('.toast');
     if (existing) existing.remove();
     
     const toast = document.createElement('div');
     toast.className = 'toast';
-    toast.textContent = message;
+    
+    const icon = type === 'success' 
+        ? `<i class="fa-sharp-duotone fa-solid fa-circle-check"></i>`
+        : `<i class="fa-sharp-duotone fa-solid fa-triangle-exclamation" style="color: var(--color-red)"></i>`;
+    
+    toast.innerHTML = `${icon}<span>${message}</span>`;
     document.body.appendChild(toast);
     
     setTimeout(() => toast.classList.add('show'), 10);
     setTimeout(() => {
         toast.classList.remove('show');
         setTimeout(() => toast.remove(), 300);
-    }, 2000);
+    }, 2200);
 }
 
 // Escape HTML utility
