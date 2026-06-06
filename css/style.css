@@ -12,40 +12,40 @@
   --color-sidebar-text: #64748b;
   --color-sidebar-active: #09090b;
   --color-sidebar-active-bg: #f4f4f5;
-  
+
   --color-primary: #09090b;
   --color-primary-light: rgba(9, 9, 11, 0.05);
-  
+
   --color-blue: #2563eb;
   --color-blue-light: rgba(37, 99, 235, 0.08);
   --color-blue-glow: rgba(37, 99, 235, 0.15);
-  
+
   --color-green: #10b981;
   --color-green-light: rgba(16, 185, 129, 0.08);
   --color-green-glow: rgba(16, 185, 129, 0.15);
-  
+
   --color-red: #f43f5e;
   --color-red-light: rgba(244, 63, 94, 0.08);
   --color-red-glow: rgba(244, 63, 94, 0.15);
-  
+
   --color-yellow: #71717a;
   --color-yellow-light: #f4f4f5;
-  
+
   --color-purple: #27272a;
   --color-purple-light: #f4f4f5;
-  
+
   --radius-lg: 16px;
   --radius-md: 12px;
   --radius-sm: 8px;
-  
+
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.03), 0 2px 4px -2px rgba(0, 0, 0, 0.03);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -4px rgba(0, 0, 0, 0.02);
   --shadow-premium: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
-  
+
   --font-title: 'Outfit', sans-serif;
   --font-body: 'Inter', sans-serif;
-  
+
   --transition-fast: 0.15s ease;
   --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-slow: 0.35s ease;
@@ -73,13 +73,16 @@ body {
   width: 8px;
   height: 8px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background: #cbd5e1;
   border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
 }
@@ -195,7 +198,7 @@ body {
   .sidebar {
     display: none;
   }
-  
+
   .mobile-nav {
     display: flex;
     position: fixed;
@@ -211,7 +214,7 @@ body {
     box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.04);
     padding-bottom: env(safe-area-inset-bottom);
   }
-  
+
   .mobile-nav-link {
     display: flex;
     flex-direction: column;
@@ -225,17 +228,17 @@ body {
     height: 100%;
     justify-content: center;
   }
-  
+
   .mobile-nav-link i {
     font-size: 20px;
     transition: transform var(--transition-fast);
   }
-  
+
   .mobile-nav-link.active {
     color: var(--color-primary);
     font-weight: 600;
   }
-  
+
   .mobile-nav-link.active i {
     transform: translateY(-2px);
   }
@@ -255,7 +258,8 @@ body {
 @media (max-width: 768px) {
   .main-content {
     margin-left: 0;
-    padding: 16px 16px 80px; /* space for mobile nav */
+    padding: 16px 16px 80px;
+    /* space for mobile nav */
   }
 }
 
@@ -333,6 +337,7 @@ body {
     gap: 16px;
     margin-bottom: 24px;
   }
+
   .user-profile {
     width: 100%;
     justify-content: flex-start;
@@ -378,10 +383,21 @@ body {
   background-color: var(--color-text-muted);
 }
 
-.stat-card.stat-total::before { background-color: var(--color-purple); }
-.stat-card.stat-called::before { background-color: var(--color-blue); }
-.stat-card.stat-vote-me::before { background-color: var(--color-green); }
-.stat-card.stat-opposition::before { background-color: var(--color-red); }
+.stat-card.stat-total::before {
+  background-color: var(--color-purple);
+}
+
+.stat-card.stat-called::before {
+  background-color: var(--color-blue);
+}
+
+.stat-card.stat-vote-me::before {
+  background-color: var(--color-green);
+}
+
+.stat-card.stat-opposition::before {
+  background-color: var(--color-red);
+}
 
 .stat-main {
   display: flex;
@@ -425,14 +441,17 @@ body {
   background-color: var(--color-purple-light);
   color: var(--color-purple);
 }
+
 .stat-called .stat-icon-wrapper {
   background-color: var(--color-blue-light);
   color: var(--color-blue);
 }
+
 .stat-vote-me .stat-icon-wrapper {
   background-color: var(--color-green-light);
   color: var(--color-green);
 }
+
 .stat-opposition .stat-icon-wrapper {
   background-color: var(--color-red-light);
   color: var(--color-red);
@@ -481,17 +500,18 @@ body {
   position: relative;
 }
 
-.search-icon {
+.search-icon-wrapper {
   position: absolute;
   left: 14px;
-  top: 0;
-  bottom: 0;
-  display: flex;
-  align-items: center;
+  top: 50%;
+  transform: translateY(-50%);
   color: var(--color-text-muted);
   font-size: 16px;
   pointer-events: none;
   z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .search-input {
@@ -561,10 +581,12 @@ body {
     flex-direction: column;
     align-items: stretch;
   }
+
   .search-container {
     width: 100%;
     flex: none;
   }
+
   .filter-group {
     width: 100%;
     flex: none;
@@ -754,7 +776,7 @@ body {
 
 .copy-phone-btn:hover {
   color: var(--color-text);
-  background-color: rgba(0,0,0,0.05);
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
 /* Card Controls */
@@ -809,6 +831,7 @@ body {
   color: var(--color-blue);
   box-shadow: 0 0 12px var(--color-blue-glow);
 }
+
 .card-action-btn.active-called i {
   --fa-primary-color: #2563eb;
   --fa-secondary-color: #3b82f6;
@@ -822,6 +845,7 @@ body {
   color: var(--color-green);
   box-shadow: 0 0 12px var(--color-green-glow);
 }
+
 .card-action-btn.active-vote-me i {
   --fa-primary-color: #10b981;
   --fa-secondary-color: #34d399;
@@ -835,6 +859,7 @@ body {
   color: var(--color-red);
   box-shadow: 0 0 12px var(--color-red-glow);
 }
+
 .card-action-btn.active-opposition i {
   --fa-primary-color: #f43f5e;
   --fa-secondary-color: #fb7185;
@@ -942,8 +967,13 @@ body {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* ── Pagination ──────────────────────────────────── */
@@ -1227,7 +1257,8 @@ body {
   .toast {
     left: 24px;
     right: 24px;
-    bottom: 80px; /* offset for bottom mobile navigation */
+    bottom: 80px;
+    /* offset for bottom mobile navigation */
     justify-content: center;
   }
 }
@@ -1239,6 +1270,7 @@ body {
     opacity: 0;
     transform: translateY(16px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -1249,15 +1281,19 @@ body {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
 }
 
 @keyframes bounceScale {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.12);
   }
@@ -1301,11 +1337,11 @@ body {
   display: none;
 }
 
-.phone-toggle-input:checked + .phone-toggle-switch {
+.phone-toggle-input:checked+.phone-toggle-switch {
   background-color: var(--color-primary);
 }
 
-.phone-toggle-input:checked + .phone-toggle-switch::after {
+.phone-toggle-input:checked+.phone-toggle-switch::after {
   transform: translateX(20px);
 }
 
@@ -1395,4 +1431,3 @@ body {
   border-radius: 4px;
   transition: width var(--transition-slow);
 }
-
