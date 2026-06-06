@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voter Tracker - Campaign Stats</title>
+    <!-- CSS Style File -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- User Premium FontAwesome Kit CDN -->
+    <script src="https://zenithkandel.com.np/fontawesome/zenith-icons.js" crossorigin="anonymous"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation (Desktop) -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo-container">
+                    <i class="fa-sharp-duotone fa-solid fa-check-to-slot"></i>
+                </div>
+                <div>
+                    <h2>VoterTracker</h2>
+                    <span>Campaign Portal</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-link" id="sidebar-nav-dashboard">
+                    <i class="fa-sharp-duotone fa-solid fa-address-book"></i> Voter List
+                </a>
+                <a href="stats.html" class="nav-link active" id="sidebar-nav-stats">
+                    <i class="fa-sharp-duotone fa-solid fa-chart-line"></i> Campaign Stats
+                </a>
+                <a href="config.html" class="nav-link" id="sidebar-nav-settings">
+                    <i class="fa-sharp-duotone fa-solid fa-gear"></i> Settings
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="main-content">
+            <!-- Top Dashboard Bar -->
+            <div class="top-bar">
+                <div class="page-header">
+                    <h1>Campaign Stats</h1>
+                    <p>Visual analytics, graphs, and statistical overview of voter tracking status</p>
+                </div>
+                
+                <div class="user-profile" id="user-profile-widget">
+                    <div class="user-avatar" id="user-avatar-initials">VT</div>
+                    <div class="user-info">
+                        <span class="user-name" id="display-candidate-name">Candidate</span>
+                        <span class="user-role">Election Candidate</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats/Metrics Panel (Monochromatic Grayscale Styles) -->
+            <div class="stats-row">
+                <!-- Total Voters -->
+                <div class="stat-card stat-total" id="card-metric-total">
+                    <div class="stat-main">
+                        <div class="stat-details">
+                            <div class="stat-label">Total Voters</div>
+                            <div class="stat-value" id="stat-total">0</div>
+                        </div>
+                        <div class="stat-icon-wrapper">
+                            <i class="fa-sharp-duotone fa-solid fa-users"></i>
+                        </div>
+                    </div>
+                    <div class="stat-sub">
+                        <i class="fa-sharp-duotone fa-solid fa-database"></i> Registered in Database
+                    </div>
+                </div>
+
+                <!-- Called Voters -->
+                <div class="stat-card stat-called" id="card-metric-called">
+                    <div class="stat-main">
+                        <div class="stat-details">
+                            <div class="stat-label">Total Called</div>
+                            <div class="stat-value" id="stat-called">0</div>
+                        </div>
+                        <div class="stat-icon-wrapper">
+                            <i class="fa-sharp-duotone fa-solid fa-phone"></i>
+                        </div>
+                    </div>
+                    <div class="stat-sub">
+                        <i class="fa-sharp-duotone fa-solid fa-circle-check"></i> Outreached Voters
+                    </div>
+                </div>
+
+                <!-- Voters Supporting Me -->
+                <div class="stat-card stat-vote-me" id="card-metric-vote-me">
+                    <div class="stat-main">
+                        <div class="stat-details">
+                            <div class="stat-label">Supporting Me</div>
+                            <div class="stat-value" id="stat-vote-me">0</div>
+                        </div>
+                        <div class="stat-icon-wrapper">
+                            <i class="fa-sharp-duotone fa-solid fa-thumbs-up"></i>
+                        </div>
+                    </div>
+                    <div class="stat-sub">
+                        <i class="fa-sharp-duotone fa-solid fa-user-check"></i> Confirmed Supporters
+                    </div>
+                </div>
+
+                <!-- Opposition Voters -->
+                <div class="stat-card stat-opposition" id="card-metric-opposition">
+                    <div class="stat-main">
+                        <div class="stat-details">
+                            <div class="stat-label">Opposition</div>
+                            <div class="stat-value" id="stat-opposition">0</div>
+                        </div>
+                        <div class="stat-icon-wrapper">
+                            <i class="fa-sharp-duotone fa-solid fa-user-slash"></i>
+                        </div>
+                    </div>
+                    <div class="stat-sub">
+                        <i class="fa-sharp-duotone fa-solid fa-shield-halved"></i> Leaning Opposition
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts and Graphical Panels -->
+            <div class="stats-container">
+                <!-- Card 1: Support Distribution Donut Chart -->
+                <div class="chart-card">
+                    <h3><i class="fa-sharp-duotone fa-solid fa-chart-pie"></i> Support Overview</h3>
+                    <div class="chart-body-wrapper">
+                        <canvas id="chart-donut-support"></canvas>
+                    </div>
+                </div>
+
+                <!-- Card 2: Opposition Candidates Distribution Bar Chart -->
+                <div class="chart-card">
+                    <h3><i class="fa-sharp-duotone fa-solid fa-chart-simple"></i> Opposition Breakdown</h3>
+                    <div class="chart-body-wrapper">
+                        <canvas id="chart-bar-opposition"></canvas>
+                    </div>
+                </div>
+
+                <!-- Card 3: Numerical Targets and Progress Rates -->
+                <div class="chart-card" style="grid-column: 1 / -1; min-height: auto;">
+                    <h3><i class="fa-sharp-duotone fa-solid fa-bullseye"></i> Campaign Target Goals</h3>
+                    <div class="progress-widget-list">
+                        <!-- Progress item 1: Called Outreach Ratio -->
+                        <div class="progress-widget-item">
+                            <div class="progress-widget-header">
+                                <span>Called Outreach Completion</span>
+                                <span id="label-progress-called">0%</span>
+                            </div>
+                            <div class="progress-widget-track">
+                                <div class="progress-widget-fill" id="fill-progress-called" style="width: 0%;"></div>
+                            </div>
+                        </div>
+
+                        <!-- Progress item 2: Leaning Support Ratio -->
+                        <div class="progress-widget-item">
+                            <div class="progress-widget-header">
+                                <span>Support Leaning Rate (of Called)</span>
+                                <span id="label-progress-support">0%</span>
+                            </div>
+                            <div class="progress-widget-track">
+                                <div class="progress-widget-fill" id="fill-progress-support" style="width: 0%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Bottom Navigation Bar (Mobile View) -->
+        <nav class="mobile-nav" id="mobile-navigation-bar">
+            <a href="index.html" class="mobile-nav-link" id="mobile-nav-dashboard">
+                <i class="fa-sharp-duotone fa-solid fa-address-book"></i>
+                <span>Voters</span>
+            </a>
+            <a href="stats.html" class="mobile-nav-link active" id="mobile-nav-stats">
+                <i class="fa-sharp-duotone fa-solid fa-chart-line"></i>
+                <span>Stats</span>
+            </a>
+            <a href="config.html" class="mobile-nav-link" id="mobile-nav-settings">
+                <i class="fa-sharp-duotone fa-solid fa-gear"></i>
+                <span>Settings</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- JS Logic File -->
+    <script src="js/stats.js"></script>
+</body>
+</html>

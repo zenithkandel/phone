@@ -4,7 +4,7 @@ let allTracking = {};
 let config = {};
 let filteredVoters = [];
 let currentPage = 1;
-const perPage = 24; // divisible by 1, 2, 3, and 4 (perfect for responsive grids)
+const perPage = 24; // divisible by 1, 2, 3, and 4 (perfect for grids)
 
 // DOM Elements
 const cardsGrid = document.getElementById('voter-cards-grid');
@@ -13,9 +13,10 @@ const filterStatus = document.getElementById('filter-status');
 const filterTitle = document.getElementById('filter-title');
 const filterSource = document.getElementById('filter-source');
 const filterRenewal = document.getElementById('filter-renewal');
+const toggleShowNoPhone = document.getElementById('toggle-show-no-phone');
 const paginationEl = document.getElementById('pagination');
 
-// Stats elements
+// Stats elements (optional on this page)
 const statTotal = document.getElementById('stat-total');
 const statCalled = document.getElementById('stat-called');
 const statVoteMe = document.getElementById('stat-vote-me');
@@ -83,8 +84,15 @@ function applyFilters() {
     const titleFilter = filterTitle.value;
     const sourceFilter = filterSource.value;
     const renewalFilter = filterRenewal.value;
+    const showNoPhone = toggleShowNoPhone ? toggleShowNoPhone.checked : false;
 
     filteredVoters = allVoters.filter(voter => {
+        // Hiding voters without phone numbers by default
+        const hasNoPhone = !voter.phone || voter.phone === 'Not Found' || voter.phone.trim() === '';
+        if (!showNoPhone && hasNoPhone) {
+            return false;
+        }
+
         // Search
         if (search && !voter.name.toLowerCase().includes(search) && !voter.phone.includes(search)) {
             return false;
@@ -321,8 +329,10 @@ async function setOppositionCandidate(voterId, candidate) {
     }
 }
 
-// Update stats cards in real-time
+// Update stats cards in real-time (safe if metrics display isn't present in DOM)
 function updateStats() {
+    if (!statTotal || !statCalled || !statVoteMe || !statOpposition) return;
+
     const total = allVoters.length;
     let called = 0, voteMe = 0, opposition = 0;
 
@@ -431,6 +441,9 @@ filterStatus.addEventListener('change', applyFilters);
 filterTitle.addEventListener('change', applyFilters);
 filterSource.addEventListener('change', applyFilters);
 filterRenewal.addEventListener('change', applyFilters);
+if (toggleShowNoPhone) {
+    toggleShowNoPhone.addEventListener('change', applyFilters);
+}
 
 // Debounce utility
 function debounce(fn, delay) {

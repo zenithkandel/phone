@@ -10,11 +10,11 @@
   --color-border-hover: #cbd5e1;
   --color-sidebar: #ffffff;
   --color-sidebar-text: #64748b;
-  --color-sidebar-active: #4f46e5;
-  --color-sidebar-active-bg: rgba(79, 70, 229, 0.06);
+  --color-sidebar-active: #09090b;
+  --color-sidebar-active-bg: #f4f4f5;
   
-  --color-primary: #4f46e5;
-  --color-primary-light: rgba(79, 70, 229, 0.08);
+  --color-primary: #09090b;
+  --color-primary-light: rgba(9, 9, 11, 0.05);
   
   --color-blue: #2563eb;
   --color-blue-light: rgba(37, 99, 235, 0.08);
@@ -28,11 +28,11 @@
   --color-red-light: rgba(244, 63, 94, 0.08);
   --color-red-glow: rgba(244, 63, 94, 0.15);
   
-  --color-yellow: #eab308;
-  --color-yellow-light: rgba(234, 179, 8, 0.08);
+  --color-yellow: #71717a;
+  --color-yellow-light: #f4f4f5;
   
-  --color-purple: #8b5cf6;
-  --color-purple-light: rgba(139, 92, 246, 0.08);
+  --color-purple: #27272a;
+  --color-purple-light: #f4f4f5;
   
   --radius-lg: 16px;
   --radius-md: 12px;
@@ -119,13 +119,13 @@ body {
   width: 40px;
   height: 40px;
   border-radius: var(--radius-md);
-  background: linear-gradient(135deg, var(--color-primary), #6366f1);
+  background: linear-gradient(135deg, #09090b, #27272a);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #ffffff;
   font-size: 20px;
-  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+  box-shadow: 0 4px 12px rgba(9, 9, 11, 0.15);
 }
 
 .sidebar-header h2 {
@@ -298,7 +298,7 @@ body {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--color-blue), var(--color-purple));
+  background: linear-gradient(135deg, #09090b, #71717a);
   color: #ffffff;
   display: flex;
   align-items: center;
@@ -1258,3 +1258,137 @@ body {
     transform: scale(1.12);
   }
 }
+
+/* ── Phone Toggle Custom Switch ────────────────── */
+.phone-toggle-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  user-select: none;
+  cursor: pointer;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.phone-toggle-switch {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  background-color: var(--color-border-hover);
+  border-radius: 20px;
+  transition: background-color var(--transition-fast);
+}
+
+.phone-toggle-switch::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-fast);
+}
+
+.phone-toggle-input {
+  display: none;
+}
+
+.phone-toggle-input:checked + .phone-toggle-switch {
+  background-color: var(--color-primary);
+}
+
+.phone-toggle-input:checked + .phone-toggle-switch::after {
+  transform: translateX(20px);
+}
+
+/* ── Stats Page Layout & Charts ────────────────── */
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-top: 8px;
+}
+
+@media (max-width: 900px) {
+  .stats-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.chart-card {
+  background-color: var(--color-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-md);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 380px;
+}
+
+.chart-card h3 {
+  font-family: var(--font-title);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px dashed var(--color-border);
+  padding-bottom: 12px;
+}
+
+.chart-card h3 i {
+  color: var(--color-text-secondary);
+}
+
+.chart-body-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+}
+
+.progress-widget-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 10px;
+}
+
+.progress-widget-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.progress-widget-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.progress-widget-track {
+  width: 100%;
+  height: 8px;
+  background-color: var(--color-border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-widget-fill {
+  height: 100%;
+  background-color: var(--color-primary);
+  border-radius: 4px;
+  transition: width var(--transition-slow);
+}
+
