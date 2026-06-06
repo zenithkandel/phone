@@ -35,18 +35,9 @@ if (!in_array($field, $allowed_fields)) {
 
 $file = __DIR__ . '/../data/tracking.json';
 
-$fp = fopen($file, 'c+');
-if (!$fp) {
-    http_response_code(500);
-    echo json_encode(['error' => 'Failed to open tracking file']);
-    exit;
-}
-
-flock($fp, LOCK_EX);
-
 $tracking = [];
-if (filesize($file) > 0) {
-    $content = stream_get_contents($fp);
+if (file_exists($file) && filesize($file) > 0) {
+    $content = file_get_contents($file);
     $tracking = json_decode($content, true);
     if (!is_array($tracking)) {
         $tracking = [];
@@ -64,11 +55,11 @@ if (!isset($tracking[$voter_id])) {
 
 $tracking[$voter_id][$field] = $value;
 
-fseek($fp, 0);
-ftruncate($fp, 0);
-fwrite($fp, json_encode($tracking, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-fflush($fp);
-flock($fp, LOCK_UN);
-fclose($fp);
+$result = file_put_contents($file, json_encode($tracking, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE), LOCK_EX);
+if ($result === false) {
+    http_response_code(500);
+    echo json_encode(['error' => 'Failed to write tracking data']);
+    exit;
+}
 
 echo json_encode(['success' => true]);

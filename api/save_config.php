@@ -24,18 +24,9 @@ if (!$input) {
 
 $file = __DIR__ . '/../data/config.json';
 
-$fp = fopen($file, 'c+');
-if (!$fp) {
-    http_response_code(500);
-    echo json_encode(['error' => 'Failed to open config file']);
-    exit;
-}
-
-flock($fp, LOCK_EX);
-
 $config = ['candidate_name' => '', 'opposition_candidates' => []];
-if (filesize($file) > 0) {
-    $content = stream_get_contents($fp);
+if (file_exists($file) && filesize($file) > 0) {
+    $content = file_get_contents($file);
     $existing = json_decode($content, true);
     if (is_array($existing)) {
         $config = array_merge($config, $existing);
@@ -44,11 +35,11 @@ if (filesize($file) > 0) {
 
 $config = array_merge($config, $input);
 
-fseek($fp, 0);
-ftruncate($fp, 0);
-fwrite($fp, json_encode($config, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-fflush($fp);
-flock($fp, LOCK_UN);
-fclose($fp);
+$result = file_put_contents($file, json_encode($config, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE), LOCK_EX);
+if ($result === false) {
+    http_response_code(500);
+    echo json_encode(['error' => 'Failed to write config data']);
+    exit;
+}
 
 echo json_encode(['success' => true]);

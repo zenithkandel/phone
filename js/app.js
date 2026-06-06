@@ -24,6 +24,17 @@ const statOpposition = document.getElementById('stat-opposition');
 
 // Initialize
 async function init() {
+    if (window.location.protocol === 'file:') {
+        cardsGrid.innerHTML = `
+            <div class="empty-state">
+                <i class="fa-sharp-duotone fa-solid fa-triangle-exclamation" style="color: var(--color-red)"></i>
+                <h3>Server Required</h3>
+                <p>This app requires a PHP server. Please start Apache in XAMPP and open via<br><strong>http://localhost/phone/index.html</strong></p>
+            </div>
+        `;
+        return;
+    }
+
     // Show spinner loading state
     cardsGrid.innerHTML = `
         <div class="spinner-container">
@@ -68,7 +79,14 @@ async function init() {
 
 // Populate title filter dropdown with unique titles
 function populateTitleFilter() {
-    const titles = [...new Set(allVoters.map(v => v.title).filter(Boolean))].sort();
+    const titleMap = {};
+    allVoters.forEach(v => {
+        if (v.title) {
+            const normalized = v.title.charAt(0).toUpperCase() + v.title.slice(1);
+            if (!titleMap[normalized]) titleMap[normalized] = normalized;
+        }
+    });
+    const titles = Object.values(titleMap).sort();
     titles.forEach(title => {
         const opt = document.createElement('option');
         opt.value = title;
@@ -94,7 +112,8 @@ function applyFilters() {
         }
 
         // Search
-        if (search && !voter.name.toLowerCase().includes(search) && !voter.phone.includes(search)) {
+        const phoneStr = String(voter.phone || '');
+        if (search && !voter.name.toLowerCase().includes(search) && !phoneStr.toLowerCase().includes(search)) {
             return false;
         }
 
@@ -430,9 +449,12 @@ function showToast(message) {
 // Utility: escape HTML
 function escapeHtml(str) {
     if (!str) return '';
-    const div = document.createElement('div');
-    div.textContent = str;
-    return div.innerHTML;
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
 }
 
 // Event listeners
