@@ -318,5 +318,47 @@
         "vote_opposition": false,
         "opposition_candidate": "",
         "call_later": true
+    },
+    "7": {
+        "called": false,
+        "vote_me": false,
+        "vote_opposition": true,
+        "opposition_candidate": "",
+        "call_later": false
+    },
+    "8": {
+        "called": false,
+        "vote_me": false,
+        "vote_opposition": true,
+        "opposition_candidate": "",
+        "call_later": false
+    },
+    "9": {
+        "called": false,
+        "vote_me": true,
+        "vote_opposition": false,
+        "opposition_candidate": "",
+        "call_later": false
+    },
+    "10": {
+        "called": false,
+        "vote_me": true,
+        "vote_opposition": false,
+        "opposition_candidate": "",
+        "call_later": false
+    },
+    "11": {
+        "called": false,
+        "vote_me": true,
+        "vote_opposition": false,
+        "opposition_candidate": "",
+        "call_later": false
+    },
+    "12": {
+        "called": false,
+        "vote_me": false,
+        "vote_opposition": true,
+        "opposition_candidate": "",
+        "call_later": false
     }
 }

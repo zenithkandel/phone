@@ -127,6 +127,7 @@ async function init() {
     searchClearBtn.classList.toggle('visible', searchInput.value.length > 0);
     updateChipCounts();
     applyFilters();
+    renderVoterLists();
   } catch (err) {
     reelFeed.innerHTML = '';
     emptyState.style.display = 'flex';
@@ -420,6 +421,7 @@ async function toggleField(voterId, field, value) {
 
   updateChipCounts();
   updateCardState(voterId);
+  renderVoterLists();
 
   try {
     await Promise.all([
@@ -453,6 +455,7 @@ async function toggleOpposition(voterId, value) {
   updateChipCounts();
   // Need full re-render for opposition select show/hide
   applyFiltersWithoutReset();
+  renderVoterLists();
 
   try {
     await Promise.all([
@@ -808,6 +811,84 @@ editModalOverlay.addEventListener('click', (e) => {
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeEditModal();
 });
+
+// ── Render Voter Summary Lists ──────────────────────
+function renderVoterLists() {
+  const voteMeList = [];
+  const callLaterList = [];
+
+  allVoters.forEach(voter => {
+    const t = getTracking(voter.id);
+    if (t.vote_me) voteMeList.push(voter);
+    if (t.call_later) callLaterList.push(voter);
+  });
+
+  // Sort by serial number
+  voteMeList.sort((a, b) => (a.serial || a.id) - (b.serial || b.id));
+  callLaterList.sort((a, b) => (a.serial || a.id) - (b.serial || b.id));
+
+  // Update counts
+  document.getElementById('list-count-vote-me').textContent = voteMeList.length;
+  document.getElementById('list-count-call-later').textContent = callLaterList.length;
+
+  // Render Will Vote Me list
+  const voteMeContainer = document.getElementById('list-vote-me');
+  if (voteMeList.length === 0) {
+    voteMeContainer.innerHTML = `
+      <div class="list-empty">
+        <i class="fa-sharp-duotone fa-solid fa-circle-check"></i>
+        No voters marked yet
+      </div>
+    `;
+  } else {
+    voteMeContainer.innerHTML = voteMeList.map(voter => {
+      const phone = voter.phone && voter.phone !== 'Not Found' ? voter.phone : '';
+      return `
+        <div class="voter-list-item">
+          <div class="voter-list-item-info">
+            <div class="voter-list-item-name">#${voter.serial || voter.id} &mdash; ${escapeHtml(voter.name)}</div>
+            <div class="voter-list-item-detail">
+              <i class="fa-sharp-duotone fa-solid fa-user-tie"></i> ${escapeHtml(voter.title || 'Voter')}
+              ${phone ? `<i class="fa-sharp-duotone fa-solid fa-phone"></i> ${escapeHtml(phone)}` : ''}
+            </div>
+          </div>
+          <div class="voter-list-item-actions">
+            ${phone ? `<a href="tel:${phone}" class="list-action-btn call-btn" title="Call"><i class="fa-sharp-duotone fa-solid fa-phone"></i></a>` : ''}
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // Render Call Later list
+  const callLaterContainer = document.getElementById('list-call-later');
+  if (callLaterList.length === 0) {
+    callLaterContainer.innerHTML = `
+      <div class="list-empty">
+        <i class="fa-sharp-duotone fa-solid fa-clock"></i>
+        No voters to call later
+      </div>
+    `;
+  } else {
+    callLaterContainer.innerHTML = callLaterList.map(voter => {
+      const phone = voter.phone && voter.phone !== 'Not Found' ? voter.phone : '';
+      return `
+        <div class="voter-list-item">
+          <div class="voter-list-item-info">
+            <div class="voter-list-item-name">#${voter.serial || voter.id} &mdash; ${escapeHtml(voter.name)}</div>
+            <div class="voter-list-item-detail">
+              <i class="fa-sharp-duotone fa-solid fa-user-tie"></i> ${escapeHtml(voter.title || 'Voter')}
+              ${phone ? `<i class="fa-sharp-duotone fa-solid fa-phone"></i> ${escapeHtml(phone)}` : ''}
+            </div>
+          </div>
+          <div class="voter-list-item-actions">
+            ${phone ? `<a href="tel:${phone}" class="list-action-btn call-btn" title="Call"><i class="fa-sharp-duotone fa-solid fa-phone"></i></a>` : ''}
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+}
 
 // Init
 init();
