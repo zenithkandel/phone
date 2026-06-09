@@ -304,5 +304,19 @@
         "vote_me": false,
         "vote_opposition": true,
         "opposition_candidate": "save wala list"
+    },
+    "4": {
+        "called": false,
+        "vote_me": true,
+        "vote_opposition": false,
+        "opposition_candidate": "",
+        "call_later": false
+    },
+    "5": {
+        "called": false,
+        "vote_me": false,
+        "vote_opposition": false,
+        "opposition_candidate": "",
+        "call_later": true
     }
 }

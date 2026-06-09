@@ -2,11 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Voter Tracker - Voters List</title>
-    <!-- CSS Style File -->
     <link rel="stylesheet" href="css/style.css" />
-    <!-- User Premium FontAwesome Kit CDN -->
     <script
       src="https://zenithkandel.com.np/fontawesome/zenith-icons.js"
       crossorigin="anonymous"
@@ -26,16 +24,11 @@
           </div>
         </div>
         <nav class="sidebar-nav">
-          <a
-            href="index.html"
-            class="nav-link active"
-            id="sidebar-nav-dashboard"
-          >
+          <a href="index.html" class="nav-link active" id="sidebar-nav-dashboard">
             <i class="fa-sharp-duotone fa-solid fa-address-book"></i> Voter List
           </a>
           <a href="stats.html" class="nav-link" id="sidebar-nav-stats">
-            <i class="fa-sharp-duotone fa-solid fa-chart-line"></i> Campaign
-            Stats
+            <i class="fa-sharp-duotone fa-solid fa-chart-line"></i> Campaign Stats
           </a>
           <a href="config.html" class="nav-link" id="sidebar-nav-settings">
             <i class="fa-sharp-duotone fa-solid fa-gear"></i> Settings
@@ -45,63 +38,93 @@
 
       <!-- Main Workspace -->
       <main class="main-content">
-        <!-- Top Dashboard Bar -->
+        <!-- Top Bar -->
         <div class="top-bar">
           <div class="page-header">
             <h1>Voter List</h1>
-            <p>Search, filter, and track status for all registered voters</p>
+            <p>Swipe through voters and mark their status</p>
           </div>
-
           <div class="user-profile" id="user-profile-widget">
             <div class="user-avatar" id="user-avatar-initials">VT</div>
             <div class="user-info">
-              <span class="user-name" id="display-candidate-name"
-                >Candidate</span
-              >
+              <span class="user-name" id="display-candidate-name">Candidate</span>
               <span class="user-role">Election Candidate</span>
             </div>
           </div>
         </div>
 
-        <!-- Filter Controls Panel -->
-        <div class="filter-bar">
+        <!-- Search Bar -->
+        <div class="search-bar">
           <div class="search-container">
             <div class="search-icon-wrapper">
               <i class="fa-sharp-duotone fa-solid fa-magnifying-glass"></i>
             </div>
-            <input
-              type="text"
-              class="search-input"
-              id="search-input"
-              placeholder="Search voters by name or phone..."
-            />
+            <input type="text" class="search-input" id="search-input" placeholder="Search by name or phone..." />
+            <button class="search-clear-btn" id="search-clear-btn" title="Clear search">
+              <i class="fa-sharp-duotone fa-solid fa-xmark"></i>
+            </button>
           </div>
+        </div>
 
-          <div class="filter-group">
-            <!-- Toggle Show voters with no phone number (hides them by default) -->
-            <label
-              class="phone-toggle-container"
-              id="toggle-no-phone-container"
-              title="Hide or show voters with no phone numbers"
-            >
-              <input
-                type="checkbox"
-                id="toggle-show-no-phone"
-                class="phone-toggle-input"
-              />
+        <!-- Quick Filter Chips -->
+        <div class="filter-chips-container">
+          <div class="filter-chips" id="filter-chips">
+            <button class="filter-chip active" data-filter="all">
+              <i class="fa-sharp-duotone fa-solid fa-users"></i>
+              <span>All</span>
+              <span class="chip-count" id="chip-count-all">0</span>
+            </button>
+            <button class="filter-chip" data-filter="vote_me">
+              <i class="fa-sharp-duotone fa-solid fa-circle-check"></i>
+              <span>Will Vote Me</span>
+              <span class="chip-count" id="chip-count-vote_me">0</span>
+            </button>
+            <button class="filter-chip" data-filter="vote_opposition">
+              <i class="fa-sharp-duotone fa-solid fa-circle-xmark"></i>
+              <span>Won't Vote Me</span>
+              <span class="chip-count" id="chip-count-vote_opposition">0</span>
+            </button>
+            <button class="filter-chip" data-filter="call_later">
+              <i class="fa-sharp-duotone fa-solid fa-clock"></i>
+              <span>Call Later</span>
+              <span class="chip-count" id="chip-count-call_later">0</span>
+            </button>
+            <button class="filter-chip" data-filter="called">
+              <i class="fa-sharp-duotone fa-solid fa-phone"></i>
+              <span>Called</span>
+              <span class="chip-count" id="chip-count-called">0</span>
+            </button>
+            <button class="filter-chip" data-filter="not_called">
+              <i class="fa-sharp-duotone fa-solid fa-phone-slash"></i>
+              <span>Not Called</span>
+              <span class="chip-count" id="chip-count-not_called">0</span>
+            </button>
+            <button class="filter-chip" data-filter="unmarked">
+              <i class="fa-sharp-duotone fa-solid fa-circle-question"></i>
+              <span>Unmarked</span>
+              <span class="chip-count" id="chip-count-unmarked">0</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Advanced Filters Toggle (Desktop) -->
+        <div class="advanced-filters-toggle" id="advanced-filters-toggle">
+          <button class="adv-toggle-btn" id="adv-toggle-btn">
+            <i class="fa-sharp-duotone fa-solid fa-sliders"></i>
+            <span>Advanced Filters</span>
+            <i class="fa-sharp-duotone fa-solid fa-chevron-down adv-chevron"></i>
+          </button>
+          <div class="active-filter-tags" id="active-filter-tags"></div>
+        </div>
+
+        <!-- Advanced Filters Panel (collapsible) -->
+        <div class="advanced-filters-panel" id="advanced-filters-panel">
+          <div class="filter-row">
+            <label class="phone-toggle-container" id="toggle-no-phone-container" title="Hide or show voters with no phone numbers">
+              <input type="checkbox" id="toggle-show-no-phone" class="phone-toggle-input" />
               <div class="phone-toggle-switch"></div>
               <span>Show No Phone</span>
             </label>
-
-            <div class="filter-select-wrapper">
-              <select class="filter-select" id="filter-status">
-                <option value="all">All Status</option>
-                <option value="called">Called Only</option>
-                <option value="not-called">Not Called</option>
-                <option value="vote-me">Supporting Me</option>
-                <option value="vote-opposition">Opposition Only</option>
-              </select>
-            </div>
 
             <div class="filter-select-wrapper">
               <select class="filter-select" id="filter-title">
@@ -128,24 +151,35 @@
           </div>
         </div>
 
-        <!-- Voter Cards Responsive Grid -->
-        <div class="voter-grid" id="voter-cards-grid">
+        <!-- Voter Counter -->
+        <div class="voter-counter" id="voter-counter">
+          <span id="counter-text">0 voters</span>
+        </div>
+
+        <!-- Reel-Style Voter Card Feed -->
+        <div class="reel-feed" id="reel-feed">
           <!-- Rendered dynamically by app.js -->
         </div>
 
-        <!-- Pagination Bar -->
-        <div class="pagination" id="pagination">
-          <!-- Rendered dynamically by app.js -->
+        <!-- Load More Button (for infinite scroll feel) -->
+        <div class="load-more-container" id="load-more-container">
+          <button class="load-more-btn" id="load-more-btn">
+            <i class="fa-sharp-duotone fa-solid fa-arrow-down"></i>
+            Load More
+          </button>
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-state" id="empty-state" style="display:none;">
+          <i class="fa-sharp-duotone fa-solid fa-magnifying-glass"></i>
+          <h3>No Voters Found</h3>
+          <p>Try widening your search or changing the filters.</p>
         </div>
       </main>
 
-      <!-- Bottom Navigation Bar (Mobile View) -->
+      <!-- Bottom Navigation Bar (Mobile) -->
       <nav class="mobile-nav" id="mobile-navigation-bar">
-        <a
-          href="index.html"
-          class="mobile-nav-link active"
-          id="mobile-nav-dashboard"
-        >
+        <a href="index.html" class="mobile-nav-link active" id="mobile-nav-dashboard">
           <i class="fa-sharp-duotone fa-solid fa-address-book"></i>
           <span>Voters</span>
         </a>
@@ -160,7 +194,42 @@
       </nav>
     </div>
 
-    <!-- JS Logic File -->
+    <!-- Edit Voter Modal -->
+    <div class="modal-overlay" id="edit-modal-overlay">
+      <div class="modal" id="edit-modal">
+        <div class="modal-header">
+          <h3><i class="fa-sharp-duotone fa-solid fa-pen-to-square"></i> Edit Voter Details</h3>
+          <button class="modal-close-btn" id="modal-close-btn">
+            <i class="fa-sharp-duotone fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="modal-voter-id" id="modal-voter-id">#0</div>
+          <div class="form-group">
+            <label for="edit-name">Name</label>
+            <input type="text" class="form-input" id="edit-name" placeholder="Voter name" />
+          </div>
+          <div class="form-group">
+            <label for="edit-title">Title</label>
+            <input type="text" class="form-input" id="edit-title" placeholder="Title / Role" />
+          </div>
+          <div class="form-group">
+            <label for="edit-phone">Phone</label>
+            <input type="text" class="form-input" id="edit-phone" placeholder="Phone number" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" id="modal-cancel-btn">Cancel</button>
+          <button class="btn btn-primary" id="modal-save-btn">
+            <i class="fa-sharp-duotone fa-solid fa-check"></i> Save Changes
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
+
     <script src="js/app.js"></script>
   </body>
 </html>

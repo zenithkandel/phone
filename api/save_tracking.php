@@ -26,7 +26,7 @@ $voter_id = (string) $input['voter_id'];
 $field = $input['field'];
 $value = $input['value'];
 
-$allowed_fields = ['called', 'vote_me', 'vote_opposition', 'opposition_candidate'];
+$allowed_fields = ['called', 'vote_me', 'vote_opposition', 'opposition_candidate', 'call_later'];
 if (!in_array($field, $allowed_fields)) {
     http_response_code(400);
     echo json_encode(['error' => 'Invalid field. Allowed: ' . implode(', ', $allowed_fields)]);
@@ -50,6 +50,7 @@ if (!isset($tracking[$voter_id])) {
         'vote_me' => false,
         'vote_opposition' => false,
         'opposition_candidate' => '',
+        'call_later' => false,
     ];
 }
 
