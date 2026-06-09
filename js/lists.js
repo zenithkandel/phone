@@ -11,6 +11,18 @@ const listCallLater = document.getElementById('list-call-later');
 const listCountVoteMe = document.getElementById('list-count-vote-me');
 const listCountCallLater = document.getElementById('list-count-call-later');
 
+// Edit modal
+const editModalOverlay = document.getElementById('edit-modal-overlay');
+const modalCloseBtn = document.getElementById('modal-close-btn');
+const modalCancelBtn = document.getElementById('modal-cancel-btn');
+const modalSaveBtn = document.getElementById('modal-save-btn');
+const modalVoterId = document.getElementById('modal-voter-id');
+const editName = document.getElementById('edit-name');
+const editTitle = document.getElementById('edit-title');
+const editPhone = document.getElementById('edit-phone');
+
+let editingVoterId = null;
+
 // ── Initialize ──────────────────────────────────────
 async function init() {
   if (window.location.protocol === 'file:') {
@@ -43,9 +55,41 @@ async function init() {
     }
 
     renderLists();
+    setupEventListeners();
   } catch (err) {
     showError('Error Loading Data', 'Could not connect to database. Make sure you are running via a PHP server.');
   }
+}
+
+// ── Event Listeners ─────────────────────────────────
+function setupEventListeners() {
+  // Delegated click events on lists
+  document.addEventListener('click', (e) => {
+    const target = e.target.closest('[data-action]');
+    if (!target) return;
+
+    const action = target.dataset.action;
+    const voterId = parseInt(target.dataset.voterId);
+
+    if (action === 'remove') {
+      removeFromList(voterId, target.dataset.field);
+    } else if (action === 'edit') {
+      openEditModal(voterId);
+    } else if (action === 'copy') {
+      copyToClipboard(target.dataset.phone, target.dataset.name);
+    }
+  });
+
+  // Modal events
+  modalCloseBtn.addEventListener('click', closeEditModal);
+  modalCancelBtn.addEventListener('click', closeEditModal);
+  modalSaveBtn.addEventListener('click', saveEditModal);
+  editModalOverlay.addEventListener('click', (e) => {
+    if (e.target === editModalOverlay) closeEditModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeEditModal();
+  });
 }
 
 // ── Get Tracking Defaults ───────────────────────────
@@ -84,6 +128,46 @@ function showError(title, message) {
   listCallLater.innerHTML = errorHtml;
 }
 
+// ── Remove Voter from List ──────────────────────────
+async function removeFromList(voterId, field) {
+  if (!allTracking[voterId]) {
+    allTracking[voterId] = { called: false, vote_me: false, vote_opposition: false, opposition_candidate: '', call_later: false };
+  }
+
+  allTracking[voterId][field] = false;
+
+  // Also clear opposition_candidate if removing opposition
+  const sideEffects = [];
+  if (field === 'vote_opposition') {
+    allTracking[voterId].opposition_candidate = '';
+    sideEffects.push(saveTracking(voterId, 'opposition_candidate', ''));
+  }
+
+  const voter = allVoters.find(v => v.id === voterId);
+  const label = field === 'vote_me' ? 'Will Vote Me' : 'Call Later';
+
+  // Animate the row out
+  const row = document.querySelector(`[data-voter-id="${voterId}"]`);
+  if (row) {
+    row.classList.add('list-item-removing');
+    row.addEventListener('animationend', () => {
+      renderLists();
+    }, { once: true });
+  } else {
+    renderLists();
+  }
+
+  try {
+    await Promise.all([
+      saveTracking(voterId, field, false),
+      ...sideEffects
+    ]);
+    showToast(`${voter ? voter.name : 'Voter'} removed from ${label}`);
+  } catch (err) {
+    console.error('Failed to save tracking:', err);
+  }
+}
+
 // ── Render Both Lists ───────────────────────────────
 function renderLists() {
   const voteMeList = [];
@@ -105,10 +189,7 @@ function renderLists() {
   listCountVoteMe.textContent = voteMeList.length;
   listCountCallLater.textContent = callLaterList.length;
 
-  // Render Will Vote Me list
   renderList(listVoteMe, voteMeList, 'vote_me');
-
-  // Render Call Later list
   renderList(listCallLater, callLaterList, 'call_later');
 }
 
@@ -130,13 +211,12 @@ function renderList(container, voters, type) {
     const phone = voter.phone && voter.phone !== 'Not Found' ? voter.phone : '';
     const t = getTracking(voter.id);
 
-    // Status tags
     const tags = [];
     if (t.called) tags.push('<span class="list-tag tag-blue">Called</span>');
     if (t.vote_opposition) tags.push('<span class="list-tag tag-red">Opposition</span>');
 
     return `
-      <div class="voter-list-item">
+      <div class="voter-list-item" data-voter-id="${voter.id}">
         <div class="voter-list-item-info">
           <div class="voter-list-item-name">
             <span class="list-item-id">#${voter.serial || voter.id}</span>
@@ -150,11 +230,84 @@ function renderList(container, voters, type) {
         </div>
         <div class="voter-list-item-actions">
           ${phone ? `<a href="tel:${phone}" class="list-action-btn call-btn" title="Call ${escapeHtml(voter.name)}"><i class="fa-sharp-duotone fa-solid fa-phone"></i></a>` : ''}
-          ${phone ? `<button class="list-action-btn copy-btn" onclick="copyToClipboard('${phone}', '${escapeHtml(voter.name)}')" title="Copy phone"><i class="fa-sharp-duotone fa-solid fa-copy"></i></button>` : ''}
+          ${phone ? `<button class="list-action-btn copy-btn" data-action="copy" data-phone="${phone}" data-name="${escapeHtml(voter.name)}" title="Copy phone"><i class="fa-sharp-duotone fa-solid fa-copy"></i></button>` : ''}
+          <button class="list-action-btn edit-btn" data-action="edit" data-voter-id="${voter.id}" title="Edit details">
+            <i class="fa-sharp-duotone fa-solid fa-pen"></i>
+          </button>
+          <button class="list-action-btn remove-btn" data-action="remove" data-voter-id="${voter.id}" data-field="${type}" title="Remove from list">
+            <i class="fa-sharp-duotone fa-solid fa-xmark"></i>
+          </button>
         </div>
       </div>
     `;
   }).join('');
+}
+
+// ── Edit Modal ──────────────────────────────────────
+function openEditModal(voterId) {
+  const voter = allVoters.find(v => v.id === voterId);
+  if (!voter) return;
+
+  editingVoterId = voterId;
+  modalVoterId.textContent = `#${voter.serial || voter.id}`;
+  editName.value = voter.name || '';
+  editTitle.value = voter.title || '';
+  editPhone.value = voter.phone || '';
+
+  editModalOverlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  editName.focus();
+}
+
+function closeEditModal() {
+  editModalOverlay.classList.remove('open');
+  document.body.style.overflow = '';
+  editingVoterId = null;
+}
+
+async function saveEditModal() {
+  if (!editingVoterId) return;
+
+  const voter = allVoters.find(v => v.id === editingVoterId);
+  if (!voter) return;
+
+  const newName = editName.value.trim();
+  const newTitle = editTitle.value.trim();
+  const newPhone = editPhone.value.trim();
+
+  if (!newName) {
+    showToast('Name cannot be empty');
+    return;
+  }
+
+  // Update local data
+  voter.name = newName;
+  voter.title = newTitle;
+  voter.phone = newPhone;
+
+  // Save to server
+  try {
+    await fetch('api/save_voter.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ voter_id: editingVoterId, name: newName, title: newTitle, phone: newPhone })
+    });
+  } catch (err) {
+    console.error('Failed to save voter:', err);
+  }
+
+  closeEditModal();
+  renderLists();
+  showToast('Voter details updated');
+}
+
+// ── Save Tracking ───────────────────────────────────
+async function saveTracking(voterId, field, value) {
+  return fetch('api/save_tracking.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ voter_id: voterId, field: field, value: value })
+  });
 }
 
 // ── Copy to Clipboard ───────────────────────────────
