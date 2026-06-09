@@ -391,6 +391,7 @@ async function toggleField(voterId, field, value) {
     allTracking[voterId] = { called: false, vote_me: false, vote_opposition: false, opposition_candidate: '', call_later: false };
   }
 
+  const wasOff = !allTracking[voterId][field];
   allTracking[voterId][field] = value;
   let sideEffects = [];
 
@@ -419,6 +420,31 @@ async function toggleField(voterId, field, value) {
   }
 
   updateChipCounts();
+
+  // If toggling ON a status that causes exit animation
+  if (value && wasOff && (field === 'vote_me' || field === 'call_later')) {
+    const direction = field === 'vote_me' ? 'exit-left' : 'exit-up';
+    const card = reelFeed.querySelector(`[data-voter-id="${voterId}"]`);
+    if (card) {
+      card.classList.add(direction);
+      // After 2 seconds, re-render to remove the card
+      setTimeout(() => {
+        applyFiltersWithoutReset();
+      }, 2100);
+      // Still save immediately
+      try {
+        await Promise.all([
+          saveTracking(voterId, field, value),
+          ...sideEffects
+        ]);
+      } catch (err) {
+        console.error('Failed to save tracking:', err);
+      }
+      return;
+    }
+  }
+
+  // For non-animated updates (toggling OFF, or called field)
   updateCardState(voterId);
 
   try {
@@ -451,7 +477,28 @@ async function toggleOpposition(voterId, value) {
   }
 
   updateChipCounts();
-  // Need full re-render for opposition select show/hide
+
+  // If toggling opposition ON, animate exit
+  if (value) {
+    const card = reelFeed.querySelector(`[data-voter-id="${voterId}"]`);
+    if (card) {
+      card.classList.add('exit-right');
+      setTimeout(() => {
+        applyFiltersWithoutReset();
+      }, 2100);
+      try {
+        await Promise.all([
+          saveTracking(voterId, 'vote_opposition', value),
+          ...sideEffects
+        ]);
+      } catch (err) {
+        console.error('Failed to save opposition toggle:', err);
+      }
+      return;
+    }
+  }
+
+  // Full re-render for opposition select show/hide
   applyFiltersWithoutReset();
 
   try {

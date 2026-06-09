@@ -1203,6 +1203,41 @@ body {
   50% { transform: scale(1.12); }
 }
 
+/* ── Card Exit Animations ────────────────────────── */
+@keyframes swipeLeft {
+  0% { opacity: 1; transform: translateX(0) scale(1); }
+  40% { opacity: 0.6; transform: translateX(-30px) scale(0.97); }
+  100% { opacity: 0; transform: translateX(-120%) scale(0.9) rotate(-3deg); }
+}
+
+@keyframes swipeRight {
+  0% { opacity: 1; transform: translateX(0) scale(1); }
+  40% { opacity: 0.6; transform: translateX(30px) scale(0.97); }
+  100% { opacity: 0; transform: translateX(120%) scale(0.9) rotate(3deg); }
+}
+
+@keyframes swipeUp {
+  0% { opacity: 1; transform: translateY(0) scale(1); }
+  40% { opacity: 0.6; transform: translateY(-20px) scale(0.97); }
+  100% { opacity: 0; transform: translateY(-80px) scale(0.92); max-height: 0; margin: 0; padding: 0; border-width: 0; }
+}
+
+.voter-card.exit-left {
+  animation: swipeLeft 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  pointer-events: none;
+}
+
+.voter-card.exit-right {
+  animation: swipeRight 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  pointer-events: none;
+}
+
+.voter-card.exit-up {
+  animation: swipeUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  pointer-events: none;
+  overflow: hidden;
+}
+
 /* ── Stats Row (Metrics Grid) ───────────────────── */
 .stats-row {
   display: grid;
