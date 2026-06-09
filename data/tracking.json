@@ -305,60 +305,256 @@
         "vote_opposition": true,
         "opposition_candidate": "save wala list"
     },
-    "4": {
-        "called": false,
-        "vote_me": true,
-        "vote_opposition": false,
-        "opposition_candidate": "",
-        "call_later": false
-    },
-    "5": {
-        "called": false,
-        "vote_me": false,
-        "vote_opposition": false,
-        "opposition_candidate": "",
-        "call_later": true
-    },
-    "7": {
+    "139": {
         "called": false,
         "vote_me": false,
         "vote_opposition": true,
-        "opposition_candidate": "",
-        "call_later": false
+        "opposition_candidate": "save wala list"
     },
-    "8": {
+    "185": {
         "called": false,
         "vote_me": false,
         "vote_opposition": true,
-        "opposition_candidate": "",
-        "call_later": false
+        "opposition_candidate": "save wala list"
     },
-    "9": {
+    "190": {
         "called": false,
         "vote_me": true,
         "vote_opposition": false,
-        "opposition_candidate": "",
-        "call_later": false
+        "opposition_candidate": ""
     },
-    "10": {
-        "called": false,
-        "vote_me": true,
-        "vote_opposition": false,
-        "opposition_candidate": "",
-        "call_later": false
-    },
-    "11": {
-        "called": false,
-        "vote_me": true,
-        "vote_opposition": false,
-        "opposition_candidate": "",
-        "call_later": false
-    },
-    "12": {
+    "264": {
         "called": false,
         "vote_me": false,
         "vote_opposition": true,
-        "opposition_candidate": "",
-        "call_later": false
+        "opposition_candidate": "save wala list"
+    },
+    "262": {
+        "called": false,
+        "vote_me": false,
+        "vote_opposition": true,
+        "opposition_candidate": "save wala list"
+    },
+    "265": {
+        "called": false,
+        "vote_me": true,
+        "vote_opposition": false,
+        "opposition_candidate": ""
+    },
+    "347": {
+        "called": false,
+        "vote_me": false,
+        "vote_opposition": true,
+        "opposition_candidate": "save wala list"
+    },
+    "380": {
+        "called": false,
+        "vote_me": true,
+        "vote_opposition": false,
+        "opposition_candidate": ""
+    },
+    "389": {
+        "called": false,
+        "vote_me": true,
+        "vote_opposition": false,
+        "opposition_candidate": ""
+    },
+    "395": {
+        "called": false,
+        "vote_me": true,
+        "vote_opposition": false,
+        "opposition_candidate": ""
+    },
+    "406": {
+        "called": false,
+        "vote_me": true,
+        "vote_opposition": false,
+        "opposition_candidate": ""
+    },
+    "408": {
+        "called": false,
+        "vote_me": true,
+        "vote_opposition": false,
+        "opposition_candidate": ""
+    },
+    "429": {
+        "called": false,
+        "vote_me": false,
+        "vote_opposition": true,
+        "opposition_candidate": "save wala list"
+    },
+    "434": {
+        "called": false,
+        "vote_me": false,
+        "vote_opposition": true,
+        "opposition_candidate": "save wala list"
+    },
+    "436": {
+        "called": false,
+        "vote_me": false,
+        "vote_opposition": true,
+        "opposition_candidate": "save wala list"
+    },
+    "457": {
+        "called": false,
+        "vote_me": false,
+        "vote_opposition": true,
+        "opposition_candidate": "save wala list"
+    },
+    "470": {
+        "called": false,
+        "vote_me": false,
+        "vote_opposition": true,
+        "opposition_candidate": "save wala list"
+    },
+    "478": {
+        "called": false,
+        "vote_me": false,
+        "vote_opposition": true,
+        "opposition_candidate": "save wala list"
+    },
+    "482": {
+        "called": false,
+        "vote_me": true,
+        "vote_opposition": false,
+        "opposition_candidate": ""
+    },
+    "488": {
+        "called": false,
+        "vote_me": false,
+        "vote_opposition": true,
+        "opposition_candidate": "save wala list"
+    },
+    "499": {
+        "called": false,
+        "vote_me": false,
+        "vote_opposition": true,
+        "opposition_candidate": "save wala list"
+    },
+    "528": {
+        "called": false,
+        "vote_me": true,
+        "vote_opposition": false,
+        "opposition_candidate": ""
+    },
+    "534": {
+        "called": false,
+        "vote_me": false,
+        "vote_opposition": true,
+        "opposition_candidate": "save wala list"
+    },
+    "536": {
+        "called": false,
+        "vote_me": false,
+        "vote_opposition": true,
+        "opposition_candidate": "save wala list"
+    },
+    "537": {
+        "called": false,
+        "vote_me": false,
+        "vote_opposition": true,
+        "opposition_candidate": "save wala list"
+    },
+    "539": {
+        "called": false,
+        "vote_me": false,
+        "vote_opposition": true,
+        "opposition_candidate": "save wala list"
+    },
+    "541": {
+        "called": false,
+        "vote_me": false,
+        "vote_opposition": true,
+        "opposition_candidate": "save wala list"
+    },
+    "546": {
+        "called": false,
+        "vote_me": false,
+        "vote_opposition": true,
+        "opposition_candidate": ""
+    },
+    "552": {
+        "called": false,
+        "vote_me": false,
+        "vote_opposition": true,
+        "opposition_candidate": "save wala list"
+    },
+    "558": {
+        "called": false,
+        "vote_me": true,
+        "vote_opposition": false,
+        "opposition_candidate": ""
+    },
+    "593": {
+        "called": false,
+        "vote_me": true,
+        "vote_opposition": false,
+        "opposition_candidate": ""
+    },
+    "622": {
+        "called": false,
+        "vote_me": false,
+        "vote_opposition": true,
+        "opposition_candidate": "save wala list"
+    },
+    "625": {
+        "called": false,
+        "vote_me": false,
+        "vote_opposition": true,
+        "opposition_candidate": "save wala list"
+    },
+    "660": {
+        "called": false,
+        "vote_me": true,
+        "vote_opposition": false,
+        "opposition_candidate": ""
+    },
+    "685": {
+        "called": false,
+        "vote_me": false,
+        "vote_opposition": true,
+        "opposition_candidate": "save wala list"
+    },
+    "695": {
+        "called": false,
+        "vote_me": true,
+        "vote_opposition": false,
+        "opposition_candidate": ""
+    },
+    "694": {
+        "called": false,
+        "vote_me": true,
+        "vote_opposition": false,
+        "opposition_candidate": ""
+    },
+    "704": {
+        "called": false,
+        "vote_me": false,
+        "vote_opposition": true,
+        "opposition_candidate": "save wala list"
+    },
+    "720": {
+        "called": false,
+        "vote_me": false,
+        "vote_opposition": true,
+        "opposition_candidate": "save wala list"
+    },
+    "730": {
+        "called": false,
+        "vote_me": true,
+        "vote_opposition": false,
+        "opposition_candidate": ""
+    },
+    "745": {
+        "called": false,
+        "vote_me": false,
+        "vote_opposition": true,
+        "opposition_candidate": "save wala list"
+    },
+    "807": {
+        "called": false,
+        "vote_me": false,
+        "vote_opposition": true,
+        "opposition_candidate": "save wala list"
     }
 }

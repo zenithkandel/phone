@@ -27,6 +27,9 @@
           <a href="index.html" class="nav-link active" id="sidebar-nav-dashboard">
             <i class="fa-sharp-duotone fa-solid fa-address-book"></i> Voter List
           </a>
+          <a href="lists.html" class="nav-link" id="sidebar-nav-lists">
+            <i class="fa-sharp-duotone fa-solid fa-list-check"></i> My Lists
+          </a>
           <a href="stats.html" class="nav-link" id="sidebar-nav-stats">
             <i class="fa-sharp-duotone fa-solid fa-chart-line"></i> Campaign Stats
           </a>
@@ -175,34 +178,6 @@
           <h3>No Voters Found</h3>
           <p>Try widening your search or changing the filters.</p>
         </div>
-
-        <!-- Voter Summary Lists -->
-        <div class="voter-lists-section" id="voter-lists-section">
-          <h2><i class="fa-sharp-duotone fa-solid fa-list-check"></i> Quick Overview</h2>
-          <div class="voter-list-columns">
-            <!-- Will Vote Me List -->
-            <div class="voter-list-panel">
-              <div class="voter-list-panel-header panel-green">
-                <h3><i class="fa-sharp-duotone fa-solid fa-circle-check"></i> Will Vote Me</h3>
-                <span class="list-count-badge" id="list-count-vote-me">0</span>
-              </div>
-              <div class="voter-list-scroll" id="list-vote-me">
-                <!-- Rendered by app.js -->
-              </div>
-            </div>
-
-            <!-- Call Later List -->
-            <div class="voter-list-panel">
-              <div class="voter-list-panel-header panel-orange">
-                <h3><i class="fa-sharp-duotone fa-solid fa-clock"></i> Call Later</h3>
-                <span class="list-count-badge" id="list-count-call-later">0</span>
-              </div>
-              <div class="voter-list-scroll" id="list-call-later">
-                <!-- Rendered by app.js -->
-              </div>
-            </div>
-          </div>
-        </div>
       </main>
 
       <!-- Bottom Navigation Bar (Mobile) -->
@@ -210,6 +185,10 @@
         <a href="index.html" class="mobile-nav-link active" id="mobile-nav-dashboard">
           <i class="fa-sharp-duotone fa-solid fa-address-book"></i>
           <span>Voters</span>
+        </a>
+        <a href="lists.html" class="mobile-nav-link" id="mobile-nav-lists">
+          <i class="fa-sharp-duotone fa-solid fa-list-check"></i>
+          <span>Lists</span>
         </a>
         <a href="stats.html" class="mobile-nav-link" id="mobile-nav-stats">
           <i class="fa-sharp-duotone fa-solid fa-chart-line"></i>
