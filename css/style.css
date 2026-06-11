@@ -689,13 +689,13 @@ body {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 13px;
-  color: var(--color-text-secondary);
+  font-size: 14px;
+  color: var(--color-text);
   font-weight: 500;
   margin-bottom: 12px;
 }
 
-.voter-address i { color: var(--color-orange); font-size: 14px; }
+.voter-address i { color: var(--color-orange); font-size: 15px; }
 
 .voter-contact {
   display: flex;
