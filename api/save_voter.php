@@ -40,6 +40,7 @@ foreach ($voters as &$voter) {
         if (isset($input['name'])) $voter['name'] = $input['name'];
         if (isset($input['title'])) $voter['title'] = $input['title'];
         if (isset($input['phone'])) $voter['phone'] = $input['phone'];
+        if (isset($input['address'])) $voter['address'] = $input['address'];
         $found = true;
         break;
     }

@@ -20,6 +20,7 @@ const modalVoterId = document.getElementById('modal-voter-id');
 const editName = document.getElementById('edit-name');
 const editTitle = document.getElementById('edit-title');
 const editPhone = document.getElementById('edit-phone');
+const editAddress = document.getElementById('edit-address');
 
 let editingVoterId = null;
 
@@ -225,6 +226,7 @@ function renderList(container, voters, type) {
           <div class="voter-list-item-detail">
             <i class="fa-sharp-duotone fa-solid fa-user-tie"></i> ${escapeHtml(voter.title || 'Voter')}
             ${phone ? `<i class="fa-sharp-duotone fa-solid fa-phone"></i> ${escapeHtml(phone)}` : ''}
+            ${voter.address ? `<i class="fa-sharp-duotone fa-solid fa-location-dot"></i> ${escapeHtml(voter.address)}` : ''}
           </div>
           ${tags.length ? `<div class="list-item-tags">${tags.join('')}</div>` : ''}
         </div>
@@ -253,6 +255,7 @@ function openEditModal(voterId) {
   editName.value = voter.name || '';
   editTitle.value = voter.title || '';
   editPhone.value = voter.phone || '';
+  editAddress.value = voter.address || '';
 
   editModalOverlay.classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -274,6 +277,7 @@ async function saveEditModal() {
   const newName = editName.value.trim();
   const newTitle = editTitle.value.trim();
   const newPhone = editPhone.value.trim();
+  const newAddress = editAddress.value.trim();
 
   if (!newName) {
     showToast('Name cannot be empty');
@@ -284,13 +288,14 @@ async function saveEditModal() {
   voter.name = newName;
   voter.title = newTitle;
   voter.phone = newPhone;
+  voter.address = newAddress;
 
   // Save to server
   try {
     await fetch('api/save_voter.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ voter_id: editingVoterId, name: newName, title: newTitle, phone: newPhone })
+      body: JSON.stringify({ voter_id: editingVoterId, name: newName, title: newTitle, phone: newPhone, address: newAddress })
     });
   } catch (err) {
     console.error('Failed to save voter:', err);

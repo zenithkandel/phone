@@ -34,6 +34,7 @@ const modalVoterId = document.getElementById('modal-voter-id');
 const editName = document.getElementById('edit-name');
 const editTitle = document.getElementById('edit-title');
 const editPhone = document.getElementById('edit-phone');
+const editAddress = document.getElementById('edit-address');
 
 let editingVoterId = null;
 
@@ -210,7 +211,8 @@ function applyFilters() {
     if (!showNoPhone && hasNoPhone) return false;
 
     // Search
-    if (search && !voter.name.toLowerCase().includes(search) && !phoneStr.toLowerCase().includes(search)) return false;
+    const addrStr = String(voter.address || '').toLowerCase();
+    if (search && !voter.name.toLowerCase().includes(search) && !phoneStr.toLowerCase().includes(search) && !addrStr.includes(search)) return false;
 
     // Title
     const voterTitle = voter.title ? (voter.title.charAt(0).toUpperCase() + voter.title.slice(1)) : '';
@@ -350,6 +352,12 @@ function createVoterCard(voter, idx) {
         <i class="fa-sharp-duotone fa-solid fa-user-tie"></i>
         <span>${escapeHtml(voter.title || 'Voter')}</span>
       </div>
+      ${voter.address ? `
+      <div class="voter-address">
+        <i class="fa-sharp-duotone fa-solid fa-location-dot"></i>
+        <span>${escapeHtml(voter.address)}</span>
+      </div>
+      ` : ''}
       <div class="voter-contact">
         <a href="tel:${voter.phone}" class="phone-link" title="Call ${escapeHtml(voter.name)}">
           <i class="fa-sharp-duotone fa-solid fa-phone"></i>
@@ -559,7 +567,7 @@ function applyFiltersWithoutReset() {
     const phoneStr = String(voter.phone || '');
     const hasNoPhone = !phoneStr || phoneStr === 'Not Found' || phoneStr.trim() === '';
     if (!showNoPhone && hasNoPhone) return false;
-    if (search && !voter.name.toLowerCase().includes(search) && !phoneStr.toLowerCase().includes(search)) return false;
+    if (search && !voter.name.toLowerCase().includes(search) && !phoneStr.toLowerCase().includes(search) && !String(voter.address || '').toLowerCase().includes(search)) return false;
     const voterTitle = voter.title ? (voter.title.charAt(0).toUpperCase() + voter.title.slice(1)) : '';
     if (titleFilter !== 'all' && voterTitle !== titleFilter) return false;
     if (sourceFilter !== 'all' && voter.source !== sourceFilter) return false;
@@ -668,6 +676,7 @@ function openEditModal(voterId) {
   editName.value = voter.name || '';
   editTitle.value = voter.title || '';
   editPhone.value = voter.phone || '';
+  editAddress.value = voter.address || '';
 
   editModalOverlay.classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -689,6 +698,7 @@ async function saveEditModal() {
   const newName = editName.value.trim();
   const newTitle = editTitle.value.trim();
   const newPhone = editPhone.value.trim();
+  const newAddress = editAddress.value.trim();
 
   if (!newName) {
     showToast('Name cannot be empty');
@@ -699,13 +709,14 @@ async function saveEditModal() {
   voter.name = newName;
   voter.title = newTitle;
   voter.phone = newPhone;
+  voter.address = newAddress;
 
   // Save to server
   try {
     await fetch('api/save_voter.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ voter_id: editingVoterId, name: newName, title: newTitle, phone: newPhone })
+      body: JSON.stringify({ voter_id: editingVoterId, name: newName, title: newTitle, phone: newPhone, address: newAddress })
     });
   } catch (err) {
     console.error('Failed to save voter:', err);
